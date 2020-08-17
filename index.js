@@ -8,8 +8,8 @@ const headers= [
   },
   {
     script:
-      "https://cdn.jsdelivr.net/npm/quillgethtml@0.0.6/quillgethtml.js",
-    integrity: "sha256-u5C0kZWZFGdNhqwNf/a9UVNp+WoKmhhtH+cQviSm30M="
+      "https://cdn.jsdelivr.net/npm/quill-delta-to-html@0.12.0/dist/browser/QuillDeltaToHtmlConverter.bundle.js",
+    integrity: "sha256-6BD0CamZAI2REr1TrHxX+3S9/aKCJvwzb2+T94GZUKM="
   },
   {
     css: "https://cdn.quilljs.com/1.3.6/quill.snow.css"
@@ -36,10 +36,10 @@ const Quill = {
     var the_form=$('#quill__${text(nm)}').parents('form')
     the_form.submit(function() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
-      var html=quill.getHTML()
+      var delta = quill.getContents();
+      var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, window.opts_ || {});
+      var html = qdc.convert();
       hidden_in.value= html
-      console.log("html", html);
-
     })`))
   )
 };
