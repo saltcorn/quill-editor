@@ -1,0 +1,22 @@
+{
+  "name": "@saltcorn/quill-editor",
+  "version": "0.1",
+  "description": "Quill.js editor for HTML fields",
+  "main": "index.js",
+  "dependencies": {
+    "@saltcorn/markup": "^0.0.8"
+  },
+  "author": "Tom Nielsen",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "@saltcorn/data": "^0.0.8"
+  },
+  "repository": "github:saltcorn/quill-editor",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
