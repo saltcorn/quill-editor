@@ -1,4 +1,4 @@
-const { input, div, text, script, domReady } = require("@saltcorn/markup/tags");
+const { input, div, text, script, domReady, style } = require("@saltcorn/markup/tags");
 
 const headers= [
   {
@@ -27,11 +27,11 @@ const Quill = {
       v || ""
     ),
     input({type:"hidden", name: text(nm)}),
+    style(".ql-editor strong{font-weight:bold;}"),
     script(domReady(`
     var quill = new Quill('#quill__${text(nm)}', {
       theme: 'snow'
     });
-
     var the_form=$('#quill__${text(nm)}').parents('form')
     the_form.submit(function() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
