@@ -4,7 +4,6 @@ const headers= [
   {
     script:
       "https://cdn.quilljs.com/1.3.6/quill.min.js"
-    //integrity: "sha256-qXgZ3jy1txdNZG0Lv20X3u5yh4892KqFcfF1SaOW0gI="
   },
   {
     script:
@@ -37,7 +36,7 @@ const Quill = {
     the_form.submit(function() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
       var delta = quill.getContents();
-      var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, window.opts_ || {});
+      var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, {});
       var html = qdc.convert();
       hidden_in.value= html
     })`))
