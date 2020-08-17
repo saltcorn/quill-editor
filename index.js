@@ -1,9 +1,15 @@
-const { input, div, text, script, domReady, style } = require("@saltcorn/markup/tags");
+const {
+  input,
+  div,
+  text,
+  script,
+  domReady,
+  style
+} = require("@saltcorn/markup/tags");
 
-const headers= [
+const headers = [
   {
-    script:
-      "https://cdn.quilljs.com/1.3.6/quill.min.js"
+    script: "https://cdn.quilljs.com/1.3.6/quill.min.js"
   },
   {
     script:
@@ -13,22 +19,26 @@ const headers= [
   {
     css: "https://cdn.quilljs.com/1.3.6/quill.snow.css"
   }
-]
+];
 
 const Quill = {
   type: "HTML",
   isEdit: true,
-  run: (nm, v, attrs, cls) =>div( {
-        class: [cls]},
+  run: (nm, v, attrs, cls) =>
     div(
-     {
-        id: `quill__${text(nm)}`,
+      {
+        class: [cls]
       },
-      v || ""
-    ),
-    input({type:"hidden", name: text(nm)}),
-    style(".ql-editor strong{font-weight:bold;}"),
-    script(domReady(`
+      div(
+        {
+          id: `quill__${text(nm)}`
+        },
+        v || ""
+      ),
+      input({ type: "hidden", name: text(nm) }),
+      style(".ql-editor strong{font-weight:bold;}"),
+      script(
+        domReady(`
     var quill = new Quill('#quill__${text(nm)}', {
       theme: 'snow'
     });
@@ -39,9 +49,16 @@ const Quill = {
       var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, {});
       var html = qdc.convert();
       hidden_in.value= html
-    })`))
-  )
+    })`)
+      )
+    )
 };
 
+const dependencies = ["@saltcorn/html"];
 
-module.exports = { sc_plugin_api_version: 1, fieldviews: {Quill}, headers };
+module.exports = {
+  sc_plugin_api_version: 1,
+  fieldviews: { Quill },
+  headers,
+  dependencies
+};
