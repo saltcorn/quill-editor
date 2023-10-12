@@ -4,21 +4,21 @@ const {
   text,
   script,
   domReady,
-  style
+  style,
 } = require("@saltcorn/markup/tags");
 
 const headers = [
   {
-    script: "https://cdn.quilljs.com/1.3.6/quill.min.js"
+    script: "https://cdn.quilljs.com/1.3.6/quill.min.js",
   },
   {
     script:
       "https://cdn.jsdelivr.net/npm/quill-delta-to-html@0.12.0/dist/browser/QuillDeltaToHtmlConverter.bundle.js",
-    integrity: "sha256-6BD0CamZAI2REr1TrHxX+3S9/aKCJvwzb2+T94GZUKM="
+    integrity: "sha256-6BD0CamZAI2REr1TrHxX+3S9/aKCJvwzb2+T94GZUKM=",
   },
   {
-    css: "https://cdn.quilljs.com/1.3.6/quill.snow.css"
-  }
+    css: "https://cdn.quilljs.com/1.3.6/quill.snow.css",
+  },
 ];
 
 const Quill = {
@@ -27,11 +27,11 @@ const Quill = {
   run: (nm, v, attrs, cls) =>
     div(
       {
-        class: [cls]
+        class: [cls],
       },
       div(
         {
-          id: `quill__${text(nm)}`
+          id: `quill__${text(nm)}`,
         },
         v || ""
       ),
@@ -42,6 +42,9 @@ const Quill = {
     var quill = new Quill('#quill__${text(nm)}', {
       theme: 'snow'
     });
+    $('input[name=${text(nm)}]').on('set_form_field', (e)=>{
+      $('#quill__${text(nm)} .ql-editor').html(e.target.value)
+    })
     var the_form=$('#quill__${text(nm)}').parents('form')
     the_form.submit(function() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
@@ -51,7 +54,7 @@ const Quill = {
       hidden_in.value= html
     })`)
       )
-    )
+    ),
 };
 
 const dependencies = ["@saltcorn/html"];
@@ -60,5 +63,5 @@ module.exports = {
   sc_plugin_api_version: 1,
   fieldviews: { Quill },
   headers,
-  dependencies
+  dependencies,
 };
