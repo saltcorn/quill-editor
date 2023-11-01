@@ -48,13 +48,18 @@ const Quill = {
       $('#quill_${text(nm)}_${rnd_id} .ql-editor').html(e.target.value)
     })
     var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
-    the_form.submit(function() {
+    function copyToHidden() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
       var delta = quill.getContents();
       var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, {});
       var html = qdc.convert();
       hidden_in.value= html
-    })`)
+    }
+    quill.on('text-change',  $.debounce ? $.debounce(function() {
+      copyToHidden();
+      the_form.trigger('change')
+    }, 500, null,true) : copyToHidden )
+    the_form.submit(copyToHidden)`)
       )
     );
   },
