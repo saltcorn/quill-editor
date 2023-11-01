@@ -24,14 +24,16 @@ const headers = [
 const Quill = {
   type: "HTML",
   isEdit: true,
-  run: (nm, v, attrs, cls) =>
-    div(
+  run: (nm, v, attrs, cls) => {
+    const rnd_id = `map${Math.round(Math.random() * 100000)}`;
+
+    return div(
       {
         class: [cls],
       },
       div(
         {
-          id: `quill__${text(nm)}`,
+          id: `quill_${text(nm)}_${rnd_id}`,
         },
         v || ""
       ),
@@ -39,13 +41,13 @@ const Quill = {
       style(".ql-editor strong{font-weight:bold;}"),
       script(
         domReady(`
-    var quill = new Quill('#quill__${text(nm)}', {
+    var quill = new Quill('#quill_${text(nm)}_${rnd_id}', {
       theme: 'snow'
     });
     $('input[name=${text(nm)}]').on('set_form_field', (e)=>{
-      $('#quill__${text(nm)} .ql-editor').html(e.target.value)
+      $('#quill_${text(nm)}_${rnd_id} .ql-editor').html(e.target.value)
     })
-    var the_form=$('#quill__${text(nm)}').parents('form')
+    var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
     the_form.submit(function() {
       var hidden_in = document.querySelector('input[name=${text(nm)}]');
       var delta = quill.getContents();
@@ -54,7 +56,8 @@ const Quill = {
       hidden_in.value= html
     })`)
       )
-    ),
+    );
+  },
 };
 
 const dependencies = ["@saltcorn/html"];
