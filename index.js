@@ -5,6 +5,7 @@ const {
   script,
   domReady,
   style,
+  text_attr,
 } = require("@saltcorn/markup/tags");
 
 const headers = [
@@ -37,23 +38,28 @@ const Quill = {
         },
         v || ""
       ),
-      input({ type: "hidden", name: text(nm) }),
+      input({
+        type: "hidden",
+        name: text(nm),
+        value: v ? text_attr(v) : undefined,
+      }),
       style(".ql-editor strong{font-weight:bold;}"),
       script(
         domReady(`
     var quill = new Quill('#quill_${text(nm)}_${rnd_id}', {
       theme: 'snow'
     });
-    $('input[name=${text(nm)}]').on('set_form_field', (e)=>{
+    var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
+
+    the_form.find('input[name=${text(nm)}]').on('set_form_field', (e)=>{
       $('#quill_${text(nm)}_${rnd_id} .ql-editor').html(e.target.value)
     })
-    var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
     function copyToHidden() {
-      var hidden_in = document.querySelector('input[name=${text(nm)}]');
+      var hidden_in = the_form.find('input[name=${text(nm)}]');
       var delta = quill.getContents();
       var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, {});
       var html = qdc.convert();
-      hidden_in.value= html
+      hidden_in.val(html)
     }
     quill.on('text-change',  $.debounce ? $.debounce(function() {
       copyToHidden();
