@@ -1,6 +1,6 @@
 {
   "name": "@saltcorn/quill-editor",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Quill.js editor for HTML fields",
   "main": "index.js",
   "dependencies": {
