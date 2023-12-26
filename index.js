@@ -8,17 +8,19 @@ const {
   text_attr,
 } = require("@saltcorn/markup/tags");
 
+const serveBase = `/plugins/public/quill-editor@${
+  require("./package.json").version
+}/`;
+
 const headers = [
   {
-    script: "https://cdn.quilljs.com/1.3.6/quill.min.js",
+    script: serveBase + "quill.min.js",
   },
   {
-    script:
-      "https://cdn.jsdelivr.net/npm/quill-delta-to-html@0.12.0/dist/browser/QuillDeltaToHtmlConverter.bundle.js",
-    integrity: "sha256-6BD0CamZAI2REr1TrHxX+3S9/aKCJvwzb2+T94GZUKM=",
+    script: serveBase + "QuillDeltaToHtmlConverter.bundle.js",
   },
   {
-    css: "https://cdn.quilljs.com/1.3.6/quill.snow.css",
+    css: serveBase + "quill.snow.css",
   },
 ];
 
@@ -76,6 +78,7 @@ const dependencies = ["@saltcorn/html"];
 module.exports = {
   sc_plugin_api_version: 1,
   fieldviews: { Quill },
+  plugin_name: "quill-editor",
   headers,
   dependencies,
 };
