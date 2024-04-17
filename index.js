@@ -81,7 +81,8 @@ const Quill = {
     var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
 
     the_form.find('input[name=${text(nm)}]').on('set_form_field', (e)=>{
-      $('#quill_${text(nm)}_${rnd_id} .ql-editor').html(e.target.value)
+      quill.clipboard.dangerouslyPasteHTML(e.target.value)
+      //$('#quill_${text(nm)}_${rnd_id} .ql-editor').html(e.target.value)
     })
     function copyToHidden() {
       var hidden_in = the_form.find('input[name=${text(nm)}]');
