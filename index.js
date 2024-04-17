@@ -48,8 +48,21 @@ const Quill = {
       style(".ql-editor strong{font-weight:bold;}"),
       script(
         domReady(`
+        const toolbarOptions = [
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons         
+          ['link'],        
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        
+          ['clean']                                         // remove formatting button
+        ];
     var quill = new Quill('#quill_${text(nm)}_${rnd_id}', {
-      theme: 'snow'
+      theme: 'snow',
+      modules: {
+        toolbar: toolbarOptions
+      },
     });
     var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
 
