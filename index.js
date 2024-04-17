@@ -17,6 +17,9 @@ const headers = [
     script: serveBase + "quill.min.js",
   },
   {
+    script: serveBase + "quill-blot-formatter.min.js",
+  },
+  {
     script: serveBase + "QuillDeltaToHtmlConverter.bundle.js",
   },
   {
@@ -65,11 +68,14 @@ const Quill = {
         
           ['clean']                                         // remove formatting button
         ];
+        Quill.register('modules/blotFormatter', QuillBlotFormatter.default); 
     var quill = new Quill('#quill_${text(nm)}_${rnd_id}', {
       theme: 'snow',
       modules: {
         table: true,
-        toolbar: toolbarOptions
+        toolbar: toolbarOptions,
+        blotFormatter: {
+        }
       },
     });
     var the_form=$('#quill_${text(nm)}_${rnd_id}').parents('form')
