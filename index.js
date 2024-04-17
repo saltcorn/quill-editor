@@ -27,6 +27,11 @@ const headers = [
 const Quill = {
   type: "HTML",
   isEdit: true,
+  configFields: [
+    { type: "Bool", label: "Table", name: "table" },
+    { type: "Bool", label: "Quote", name: "quote" },
+    { type: "Bool", label: "Color", name: "color" },
+  ],
   run: (nm, v, attrs, cls) => {
     const rnd_id = `map${Math.round(Math.random() * 100000)}`;
 
@@ -51,16 +56,19 @@ const Quill = {
         const toolbarOptions = [
           [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           ['bold', 'italic', 'underline', 'strike'],        // toggled buttons         
-          ['link'],        
+          ['link'],    
+          ${attrs?.quote ? "['blockquote']," : ""}    
           [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          ${attrs?.color ? `[{ 'color': [] }, { 'background': [] }],` : ""}
+          ${attrs?.table ? `[ 'table'],` : ""}
         
           ['clean']                                         // remove formatting button
         ];
     var quill = new Quill('#quill_${text(nm)}_${rnd_id}', {
       theme: 'snow',
       modules: {
+        table: true,
         toolbar: toolbarOptions
       },
     });
